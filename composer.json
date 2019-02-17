@@ -1,0 +1,15 @@
+{
+    "name": "yandex-market-reviews",
+    "description": "Scrapping TOP10 Yandex Market Reviews",
+    "require": {
+        "guzzlehttp/guzzle": "^6.3",
+        "symfony/dom-crawler": "^3.4",
+        "symfony/css-selector": "^3.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "": "src/",
+            "S25\\Scrapping\\": "src/"
+        }
+    }
+}
