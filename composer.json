@@ -1,7 +1,7 @@
 {
-    "name": "yamarket-reviews",
-    "description": "Парсинг ТОП10 отзывов Яндекс маркета",
-    "keywords": ["parsing", "scrapping", "reviews"],
+    "name": "market-reviews",
+    "description": "Scrapping TOP10 Yandex Market Reviews",
+    "keywords": ["parsing", "scrapping", "yandex", "reviews", "market.yandex.ru"],
     "type": "library",
     "license": "MIT",
     "authors": [
