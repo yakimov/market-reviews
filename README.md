@@ -10,30 +10,28 @@
 
 require 'vendor/autoload.php';
 
-use S25\Scrapping\Reviews;
+use S25\Scrapping\YandexReviews;
 
-// Скачиваем страницу с отзывами ozon.ru :)
+// Скачиваем страницу с отзывами
 $html   = new HTTPClient();
 $result = $html->get('https://market.yandex.ru/shop--ozon-ru/443605/reviews');
 
-$review  = new Reviews($result);
+$yandexReviews  = new YandexReviews($result);
 
 // 10 последних отзывов со страницы магазина
-$reviews = $review->getLastTenReviews();
+$reviews = $yandexReviews->getLastTenReviews();
 
 // Кол-во оценок для 5,4,3,2,1 звёзд
-$stars   = $review->getStars();
+$stars   = $yandexReviews->getStars();
 
 // Прочая информация со страницы отзывов
-$summary = $review->getSummaryRating();
-
-?>
+$summary = $yandexReviews->getSummaryRating();
 ```
 
 ### 10 последних отзывов со страницы магазина
 
 ```PHP
-$reviews = $review->getLastTenReviews();
+$reviews = $yandexReviews->getLastTenReviews();
 var_dump($reviews);
 
 ‌array (
@@ -60,7 +58,7 @@ more 9...
 ### Кол-во оценок для 5,4,3,2,1 звёзд
 
 ```PHP
-$stars   = $review->getStars();
+$stars   = $yandexReviews->getStars();
 var_dump($stars);
 
 ‌array (
@@ -94,7 +92,7 @@ var_dump($stars);
 
 ### Прочая информация со страницы отзывов
 ```PHP
-$summary = $review->getSummaryRating();
+$summary = $yandexReviews->getSummaryRating();
 var_dump($summary);
 
 ‌array (

@@ -3,7 +3,7 @@
 namespace S25\Scrapping;
 use Symfony\Component\DomCrawler\Crawler;
 
-class Reviews extends BaseScrapping
+class YandexReviews extends BaseScrapping
 {
     public function __construct($html)
     {
