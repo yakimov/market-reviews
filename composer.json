@@ -1,5 +1,5 @@
 {
-    "name": "market-reviews",
+    "name": "s25/yandex-market-reviews",
     "description": "Scrapping TOP10 Yandex Market Reviews",
     "keywords": ["parsing", "scrapping", "yandex", "reviews", "market.yandex.ru"],
     "type": "library",
