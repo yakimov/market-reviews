@@ -5,6 +5,11 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class Reviews extends BaseScrapping
 {
+    public function __construct($html)
+    {
+        parent::__construct($this->fixYandexHtml($html));
+    }
+
     public function getLastTenReviews()
     {
         return $this->dom->filter('div.n-product-review-item')->each(
@@ -71,13 +76,47 @@ class Reviews extends BaseScrapping
             function (Crawler $dom) use(&$result)
             {
                 $rate  = $this->filterAttr('div.n-rating-stars', 'data-rate', $dom);
-                $value = preg_replace('@[^\d]*@i', '', $this->filterText('div.rating-review__value', $dom));
-                $count = preg_replace('@[^\d]*@i', '', $this->filterText('div.rating-review__count', $dom));
+                $value = $this->clearDigits($this->filterText('div.rating-review__value', $dom));
+                $count = $this->clearDigits($this->filterText('div.rating-review__count', $dom));
                 $result[$rate] = ['value' => $value, 'count' => $count];
             }
         );
 
         return $result;
+    }
+
+    public function getSummaryRating()
+    {
+        $result = [];
+        $this->dom->filter('div.n-review-factors-summary-rating__header')->each(
+            function (Crawler $dom) use (&$result) {
+                $name  = $this->filterText('div.n-review-factors-summary-rating__description', $dom);
+                $value = $this->filterText('div.n-review-factors-summary-rating__value', $dom);
+                $result[$name] = $value;
+            }
+        );
+        $result['рейтинг за 3 месяца'] = $this->clearDigits($this->dom->filter('span.n-reviews-shop-rating-summary__rating-count-real')->eq(0)->text());
+        $result['за 3 месяца'] = $this->clearDigits($this->dom->filter('span.n-reviews-shop-rating-summary__rating-count-real')->eq(1)->text());
+        $result['за всё время'] = $this->clearDigits($this->dom->filter('span.n-reviews-shop-rating-summary__rating-count-real')->eq(2)->text());
+        $result['% покупателей купили бы здесь снова'] = $this->clearDigits($this->dom->filter('div.n-review-factors-summary__recommend')->text());
+
+        return $result;
+    }
+
+    /*
+     * Фикс для Яндекса который не умеет экранировать <
+     *
+     * @param string $html - html в котором нужно исправить проблему
+     * @return string — исправленный html
+     */
+    private function fixYandexHtml($html)
+    {
+        return str_replace('< 1%', '&lt;&nbsp;1%', $html);
+    }
+
+    private function clearDigits($digits)
+    {
+        return preg_replace('@[^\d]*@i', '', $digits);
     }
 
 
