@@ -11,10 +11,14 @@
 require 'vendor/autoload.php';
 
 use S25\Scrapping\YandexReviews;
+use S25\HTTPClient\Client;
+use S25\HTTPClient\UserAgent;
+
+$client = new Client();
+$client->setUserAgent(UserAgent::getRandom());
 
 // Скачиваем страницу с отзывами
-$html   = new HTTPClient();
-$result = $html->get('https://market.yandex.ru/shop--ozon-ru/443605/reviews');
+$result = $client->get('https://market.yandex.ru/shop--ozon-ru/443605/reviews');
 
 $yandexReviews  = new YandexReviews($result);
 

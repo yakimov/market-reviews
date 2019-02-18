@@ -13,11 +13,11 @@
     "require": {
         "guzzlehttp/guzzle": "^6.3",
         "symfony/dom-crawler": "^3.4",
-        "symfony/css-selector": "^3.4"
+        "symfony/css-selector": "^3.4",
+        "s25/http-client": "^1.0"
     },
     "autoload": {
         "psr-4": {
-            "": "src/",
             "S25\\Scrapping\\": "src/"
         }
     }
