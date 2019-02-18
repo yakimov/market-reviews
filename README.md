@@ -1,6 +1,9 @@
 # yandex-market-reviews
 Замена публичному Yandex.API. Получение ТОП10 отзывов и информации о магазине.
 
+## Установка
+`composer require s25/yandex-market-reviews`
+
 ## Пример использования
 ```PHP
 <?php
@@ -9,7 +12,7 @@ require 'vendor/autoload.php';
 
 use S25\Scrapping\Reviews;
 
-// Скачиваем страницу с отзывами
+// Скачиваем страницу с отзывами ozon.ru :)
 $html   = new HTTPClient();
 $result = $html->get('https://market.yandex.ru/shop--ozon-ru/443605/reviews');
 
