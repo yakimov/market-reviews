@@ -17,7 +17,7 @@ class YandexReviews extends BaseScrapping
                 $result = [];
                 $result['id']          = $dom->attr('data-review-id');
                 $result['date']        = $dom->filterXpath("//meta[@itemprop='datePublished']")->attr('content');
-                $result['‌‌author']      = $dom->filterXpath("//meta[@itemprop='author']")->attr('content');
+                $result['author']      = $dom->filterXpath("//meta[@itemprop='author']")->attr('content');
                 $result['ratingValue'] = $dom->filterXpath("//meta[@itemprop='ratingValue']")->attr('content');
                 $result['img']         = $this->getImg($dom);
                 $result['delivery']    = $this->getDelivery($dom);
