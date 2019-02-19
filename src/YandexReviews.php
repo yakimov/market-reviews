@@ -92,13 +92,30 @@ class YandexReviews extends BaseScrapping
             function (Crawler $dom) use (&$result) {
                 $name  = $this->filterText('div.n-review-factors-summary-rating__description', $dom);
                 $value = $this->filterText('div.n-review-factors-summary-rating__value', $dom);
-                $result[$name] = $value;
+                switch ($name)
+                {
+                    case 'Общение':
+                        $result['communication'] = $value;
+                        break;
+                    case 'Соответствие товара описанию':
+                        $result['description_quality'] = $value;
+                        break;
+                    case 'Удобство самовывоза':
+                        $result['easy_pickup'] = $value;
+                        break;
+                    case 'Скорость обработки заказа':
+                        $result['handling_speed'] = $value;
+                        break;
+                    case 'Скорость и качество доставки':
+                        $result['shipping_speed_and_quality'] = $value;
+                        break;
+                }
             }
         );
-        $result['рейтинг за 3 месяца'] = $this->clearDigits($this->dom->filter('span.n-reviews-shop-rating-summary__rating-count-real')->eq(0)->text());
-        $result['за 3 месяца'] = $this->clearDigits($this->dom->filter('span.n-reviews-shop-rating-summary__rating-count-real')->eq(1)->text());
-        $result['за всё время'] = $this->clearDigits($this->dom->filter('span.n-reviews-shop-rating-summary__rating-count-real')->eq(2)->text());
-        $result['% покупателей купили бы здесь снова'] = $this->clearDigits($this->dom->filter('div.n-review-factors-summary__recommend')->text());
+        $result['rating_3month'] = $this->clearDigits($this->dom->filter('span.n-reviews-shop-rating-summary__rating-count-real')->eq(0)->text());
+        $result['review_3month'] = $this->clearDigits($this->dom->filter('span.n-reviews-shop-rating-summary__rating-count-real')->eq(1)->text());
+        $result['review_all']    = $this->clearDigits($this->dom->filter('span.n-reviews-shop-rating-summary__rating-count-real')->eq(2)->text());
+        $result['happy_buyers']  = $this->clearDigits($this->dom->filter('div.n-review-factors-summary__recommend')->text());
 
         return $result;
     }
@@ -116,7 +133,7 @@ class YandexReviews extends BaseScrapping
 
     private function clearDigits($digits)
     {
-        return preg_replace('@[^\d]*@i', '', $digits);
+        return preg_replace('@[^\d,]*@i', '', $digits);
     }
 
 

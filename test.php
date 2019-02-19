@@ -6,7 +6,7 @@ use S25\Scrapping\YandexReviews;
 use S25\HTTPClient\Client;
 use S25\HTTPClient\UserAgent;
 
-$client = new Client();
+$client   = new Client();
 $client->setUserAgent(UserAgent::getRandom());
 
 // Скачиваем страницу с отзывами
@@ -22,3 +22,5 @@ $stars   = $yandexReviews->getStars();
 
 // Прочая информация со страницы отзывов
 $summary = $yandexReviews->getSummaryRating();
+
+print_r($summary);

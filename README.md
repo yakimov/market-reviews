@@ -11,14 +11,10 @@
 require 'vendor/autoload.php';
 
 use S25\Scrapping\YandexReviews;
-use S25\HTTPClient\Client;
-use S25\HTTPClient\UserAgent;
-
-$client = new Client();
-$client->setUserAgent(UserAgent::getRandom());
 
 // Скачиваем страницу с отзывами
-$result = $client->get('https://market.yandex.ru/shop--ozon-ru/443605/reviews');
+$html   = new HTTPClient();
+$result = $html->get('https://market.yandex.ru/shop--ozon-ru/443605/reviews');
 
 $yandexReviews  = new YandexReviews($result);
 
@@ -99,15 +95,16 @@ var_dump($stars);
 $summary = $yandexReviews->getSummaryRating();
 var_dump($summary);
 
-‌array (
-  'Удобство самовывоза' => '4,6',
-  'Скорость и качество доставки' => '4,2',
-  'Скорость обработки заказа' => '4,6',
-  'Общение' => '4,4',
-  'Соответствие товара описанию' => '4,6',
-  'рейтинг за 3 месяца' => '43',
-  'за 3 месяца' => '4043',
-  'за всё время' => '63847',
-  '% покупателей купили бы здесь снова' => '87',
+Array
+(
+    [communication]              => 4,4    // Общение
+    [description_quality]        => 4,6    // Соответствие товара описанию
+    [handling_speed]             => 4,6    // Скорость обработки заказа
+    [shipping_speed_and_quality] => 4,2    // Скорость и качество доставки
+    [easy_pickup]                => 4,6    // Удобство самовывоза
+    [rating_3month]              => 4,3    // Рейтинг за 3 месяца
+    [review_3month]              => 4039   // Отзывов за 3 месяца
+    [review_all]                 => 63962  // Всего отзывов
+    [happy_buyers]               => 87     // Процент покупателей купили бы тут снова
 )
 ```
