@@ -32,6 +32,8 @@ $stars   = $yandexReviews->getStars();
 // Прочая информация со страницы отзывов
 $summary = $yandexReviews->getSummaryRating();
 
+print_r($reviews[5]);
+print_r($stars);
 print_r($summary);
 ```
 
@@ -106,7 +108,7 @@ Array
 ### Прочая информация со страницы отзывов
 ```PHP
 $summary = $yandexReviews->getSummaryRating();
-var_dump($summary);
+print_r($summary);
 
 Array
 (
