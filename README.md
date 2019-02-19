@@ -5,16 +5,21 @@
 `composer require s25/yandex-market-reviews`
 
 ## Пример использования
+`php test/test.php`
 ```PHP
 <?php
 
-require 'vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 use S25\Scrapping\YandexReviews;
+use S25\HTTPClient\Client;
+use S25\HTTPClient\UserAgent;
+
+$client   = new Client();
+$client->setUserAgent(UserAgent::getRandom());
 
 // Скачиваем страницу с отзывами
-$html   = new HTTPClient();
-$result = $html->get('https://market.yandex.ru/shop--ozon-ru/443605/reviews');
+$result = $client->get('https://market.yandex.ru/shop--ozon-ru/443605/reviews');
 
 $yandexReviews  = new YandexReviews($result);
 
@@ -26,31 +31,33 @@ $stars   = $yandexReviews->getStars();
 
 // Прочая информация со страницы отзывов
 $summary = $yandexReviews->getSummaryRating();
+
+print_r($summary);
 ```
 
 ### 10 последних отзывов со страницы магазина
 
 ```PHP
 $reviews = $yandexReviews->getLastTenReviews();
-var_dump($reviews);
+print_r($reviews);
 
-‌array (
-  0 => 
-  array (
-    'id' => '87359237',
-    'date' => '2019-02-17',
-    '‌‌author' => 'Владислав',
-    'ratingValue' => '4',
-    'img' => '//avatars.mds.yandex.net/get-yapic/54535/41833720-1557781046/islands-retina-middle',
-    'delivery' => 'самовывоз',
-    'city' => 'Болохово',
-    'review' => 
-    array (
-      'positive' => 'Переодически бывают хорошие скидки на товары которых осталось мало. ',
-      'negative' => 'Платная доставка до пункта самовывоза невелирует те скидки которые бывают в этом магазине. ',
-      'comment' => 'Очень люблю и рекомендую. Новая политика порадовала. Купила подписку и продолжаю радоваться удобству, сервису, ассортименту. Благодарю вас за ваш труд!',
-    ),
-  ),
+Array
+(
+    [id] => 87411609
+    [date] => 2019-02-18
+    [author] => dizstancia d.
+    [ratingValue] => 4
+    [img] => //avatars.mds.yandex.net/get-yapic/24700/26258836-1152698/islands-retina-middle
+    [delivery] => самовывоз
+    [city] => Ростов-на-Дону
+    [review] => Array
+        (
+            [positive] => Цена и оплата спасибо от сбербанк.
+            [negative] => Дорогая доставка до пункта выдачи.
+            [comment] => Хочется бесплатной доставки до пункта самовывоза.
+        )
+
+)
 more 9...
 }
 ```
@@ -59,34 +66,40 @@ more 9...
 
 ```PHP
 $stars   = $yandexReviews->getStars();
-var_dump($stars);
+print_r($stars);
 
-‌array (
-  5 => 
-  array (
-    'value' => '50',
-    'count' => '6289',
-  ),
-  4 => 
-  array (
-    'value' => '12',
-    'count' => '1505',
-  ),
-  3 => 
-  array (
-    'value' => '12',
-    'count' => '1533',
-  ),
-  2 => 
-  array (
-    'value' => '6',
-    'count' => '776',
-  ),
-  1 => 
-  array (
-    'value' => '19',
-    'count' => '2374',
-  ),
+Array
+(
+    [5] => Array
+        (
+            [value] => 50
+            [count] => 6293
+        )
+
+    [4] => Array
+        (
+            [value] => 12
+            [count] => 1511
+        )
+
+    [3] => Array
+        (
+            [value] => 12
+            [count] => 1536
+        )
+
+    [2] => Array
+        (
+            [value] => 6
+            [count] => 778
+        )
+
+    [1] => Array
+        (
+            [value] => 19
+            [count] => 2375
+        )
+
 )
 ```
 

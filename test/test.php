@@ -1,6 +1,6 @@
 <?php
 
-require 'vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 use S25\Scrapping\YandexReviews;
 use S25\HTTPClient\Client;
@@ -23,4 +23,6 @@ $stars   = $yandexReviews->getStars();
 // Прочая информация со страницы отзывов
 $summary = $yandexReviews->getSummaryRating();
 
+print_r($reviews[5]);
+print_r($stars);
 print_r($summary);
